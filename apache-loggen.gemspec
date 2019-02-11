@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'apache-loggen/version'
 
 Gem::Specification.new do |gem|
-  gem.name          = "apache-loggen"
+  gem.name          = "apache-loggen-test"
   gem.version       = LogGenerator::VERSION
   gem.authors       = ["stingray1983"]
   gem.email         = ["stingray19830215@gmail.com"]
