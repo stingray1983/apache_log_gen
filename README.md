@@ -12,6 +12,21 @@ Apacheログに対して何かの処理を行いたい場合に使うための�
 一応、流速がなだらかになるようになっています。
 100msよりも割り込み精度が低いOSの場合はその限りではありません。
 
+## Tested 
+
+ruby 2.6.1p33 (2019-01-30 revision 66950) [x86_64-linux]
+@Scientific Linux release 7.6 (Nitrogen)
+
+```
+ruby testLogger.rb --json --rotate=5 abc.log
+```
+
+```
+-rw-rw-r--. 1  77012644  abc.2019-02-11_201707.log
+-rw-rw-r--. 1  81195529  abc.2019-02-11_201712.log
+-rw-rw-r--. 1  80805312  abc.2019-02-11_201717.log
+```
+
 ## 性能
 私のへっぽこ開発PCで毎秒12,000レコードほど生成します。
 
