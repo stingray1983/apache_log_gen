@@ -9,7 +9,7 @@ require 'json'
 module LogGenerator
 
   class Base
-    def generate(context, config)
+    def generate(context, config,logTimeOffset)
       # must override
       exit 1
     end
@@ -120,12 +120,15 @@ module LogGenerator
 
     end
 
-    def generate(context, config)
+    def generate(context, config,logTimeOffset)
 
       page = @pages[grand(@pages.size)]
       host = @hosts[grand(@hosts.size)]
+
+      loggingTime = Time.now + logTimeOffset
+
       record = {
-        'datetime' => Time.now.strftime('%d/%b/%Y:%H:%M:%S %z'),
+        'datetime' => loggingTime.strftime('%d/%b/%Y:%H:%M:%S %z'),
         'host' => host.ip,
         'user' => '-',
         'method' => page.method,
@@ -136,7 +139,7 @@ module LogGenerator
         'agent' => host.agent,
       }
     
-      return format(record, config)
+      return format(record, config),logTimeOffset
 
     end
 
@@ -235,7 +238,7 @@ module LogGenerator
   class Executors
     FIXED_RATE = 100
     def self.exec(config)
-
+      logTimeOffset = 0
       rate_per_sec = config[:rate]
       display = config[:progress]
 
@@ -331,9 +334,13 @@ module LogGenerator
 
       # 実行
       last_rotate = Time.now.to_i
+      logTimeOffset = 0
+      start_time = Time.now
+
       Executors.exec(config) do | context |
 
         if config[:rotate] > 0 && (last_rotate + config[:rotate]) <= Time.now.to_i then
+          #logTimeOffset = Time.now - start_time
           rotated_file = writer.rotate()
           if config[:progress] then
             $stderr.write "\rfile rotate. rename to #{rotated_file}\n"
@@ -342,7 +349,8 @@ module LogGenerator
         end
         
         # レコード生成
-        record = gen_obj.generate(context, config) if gen_kick
+        # p logTimeOffset
+        record,logTimeOffset = gen_obj.generate(context, config,logTimeOffset) if gen_kick
         record = block.call(context, config, record) if block
 
         # 出力
