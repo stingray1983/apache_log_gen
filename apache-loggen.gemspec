@@ -6,11 +6,11 @@ require 'apache-loggen/version'
 Gem::Specification.new do |gem|
   gem.name          = "apache-loggen"
   gem.version       = LogGenerator::VERSION
-  gem.authors       = ["tamtam180"]
-  gem.email         = ["kirscheless@gmail.com"]
+  gem.authors       = ["stingray1983"]
+  gem.email         = ["stingray19830215@gmail.com"]
   gem.description   = %q{dummy apache-log generator}
   gem.summary       = %q{dummy apache-log generator}
-  gem.homepage      = "https://github.com/tamtam180/apache_log_gen"
+  gem.homepage      = "https://github.com/stingray1983/apache_log_gen"
   gem.license       = 'Apache 2.0'
 
   gem.files         = `git ls-files`.split($/) - %w[.gitignore]

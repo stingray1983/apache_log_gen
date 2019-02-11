@@ -127,7 +127,7 @@ module LogGenerator
       record = {
         'datetime' => Time.now.strftime('%d/%b/%Y:%H:%M:%S %z'),
         'host' => host.ip,
-        'user' => '-',
+        'user' => 'tesu',
         'method' => page.method,
         'path' => page.path,
         'code' => grand(10000) == 0 ? 500 : page.code,
@@ -364,7 +364,7 @@ module LogGenerator
     op.on('--rate=RATE', '毎秒何レコード生成するか。デフォルトは0で流量制限無し。'){|v| config[:rate] = v.to_i }
     op.on('--rotate=SECOND', 'ローテーションする間隔。デフォルトは0。'){|v| config[:rotate] = v.to_i }
     op.on('--progress', 'レートの表示をする。'){|v| config[:progress] = true }
-    op.on('--json', 'json形式の出力'){|v| config[:json] = true }
+    op.on('--json', 'JSON形式の出力'){|v| config[:json] = true }
     op.parse!(ARGV)
     # ファイルかSTDOUTか
     config[:filename] = ARGV[0] if not ARGV.empty?
