@@ -127,7 +127,7 @@ module LogGenerator
       record = {
         'datetime' => Time.now.strftime('%d/%b/%Y:%H:%M:%S %z'),
         'host' => host.ip,
-        'user' => 'tesu',
+        'user' => '-',
         'method' => page.method,
         'path' => page.path,
         'code' => grand(10000) == 0 ? 500 : page.code,
@@ -144,7 +144,7 @@ module LogGenerator
       if config[:json] then
         return record.to_json + "\n"
       else
-        return %[#{record['host']} - #{record['user']} [#{record['datetime'}] "#{record['method']} #{record['path']} HTTP/1.1" #{record['code']} #{record['size']} "#{record['referer']}" "#{record['agent']}"\n] 
+        return %[#{record['host']} - #{record['user']} [#{record['datetime']}] "#{record['method']} #{record['path']} HTTP/1.1" #{record['code']} #{record['size']} "#{record['referer']}" "#{record['agent']}"\n] 
       end
     end
 
